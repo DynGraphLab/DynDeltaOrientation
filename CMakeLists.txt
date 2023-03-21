@@ -85,6 +85,7 @@ add_compile_definitions(DELTAORI_IS_LOGGING=${DELTA_ORIENTATIONS_IS_LOGGING})
 # Executables
 if(ILP)
 set(GUROBI_CXX_LIBRARY "$ENV{GUROBI_HOME}/lib/libgurobi_g++5.2.a")
+add_definitions(-DUSEILP)
 add_executable(${DELTA-ORIENTATIONS} app/${DELTA-ORIENTATIONS}.cpp $<TARGET_OBJECTS:${DELTA-ORIENTATIONS_LIB}>)
 target_link_libraries(${DELTA-ORIENTATIONS} optimized ${GUROBI_CXX_LIBRARY})
 target_link_libraries(${DELTA-ORIENTATIONS} gurobi_g++5.2 gurobi91)

@@ -36,7 +36,7 @@ int parse_parameters(int argn, char **argv,
         struct arg_dbl *brodalfagerberg_growth               = arg_dbl0(NULL, "brodalfagerberg_growth", NULL, "Growth factor in brodal fagerberg.");
         struct arg_lit *relax_ilp                            = arg_lit0(NULL, "relax_ilp", "");
 
-#ifdef ILP
+#ifdef USEILP
         struct arg_rex *algorithm                            = arg_rex0(NULL, "algorithm", "^(ILP|BFSCS|KFLIPS|RWALKCS|BFCS|MAXDECENDING|NAIVE)$", "ALGORITHM", 1, "Algorithm to use. One of {ILP, BFSCS, KFLIPS, RWALKCS, BRODAL_FAGERBERG, BFCS, MAXDECENDING, NAIVE}. Default: KFLIPS"  );
 #else 
         struct arg_rex *algorithm                            = arg_rex0(NULL, "algorithm", "^(BFSCS|KFLIPS|RWALKCS|BFCS|MAXDECENDING|NAIVE)$", "ALGORITHM", 1, "Algorithm to use. One of {BFSCS, KFLIPS, RWALKCS, BRODAL_FAGERBERG, BFCS, MAXDECENDING, NAIVE}. Default: KFLIPS"  );
@@ -47,7 +47,7 @@ int parse_parameters(int argn, char **argv,
        
         // Define argtable.
         void* argtable[] = {
-#ifdef ILP
+#ifdef USEILP
                 help, filename, filename_output, user_seed, algorithm, flips, prune_flips, depth, rw_reps, brodalfagerberg_growth, time_limit_ilp,
 #else                
                 help, filename, filename_output, user_seed, algorithm, flips, prune_flips, depth, rw_reps, brodalfagerberg_growth,

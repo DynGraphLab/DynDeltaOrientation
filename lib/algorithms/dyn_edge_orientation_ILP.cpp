@@ -1,6 +1,6 @@
 //
 //
-#ifdef ILP
+#ifdef USEILP
 #include "dyn_edge_orientation_ILP.h"
 #include "ilp.h"
 

@@ -1,7 +1,7 @@
 //
 //
 
-#ifdef ILP
+#ifdef USEILP
 #include <algorithm>
 #include <iostream>
 #include <memory>

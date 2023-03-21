@@ -18,7 +18,7 @@ template <typename... Args>
 static std::unique_ptr<dyn_edge_orientation> getdyn_edge_orientation_instance(DeltaOrientationsAlgorithmType algoType, Args&&... args) {
     std::unique_ptr<dyn_edge_orientation> solverPtr;
     switch (algoType) {
-#ifdef ILP
+#ifdef USEILP
         case ILP:
             solverPtr = std::make_unique<dyn_edge_orientation_ILP>(std::forward<Args>(args)...);
             break;
@@ -42,7 +42,7 @@ static std::unique_ptr<dyn_edge_orientation> getdyn_edge_orientation_instance(De
         case MAXDECENDING:
             solverPtr = std::make_unique<dyn_edge_orientation_MaxDecending>(std::forward<Args>(args)...);
             break;
-#ifdef ILP
+#ifdef USEILP
         case STATIC_ILP:
             solverPtr = std::make_unique<dyn_edge_orientation_ILP>(std::forward<Args>(args)...);
             break;

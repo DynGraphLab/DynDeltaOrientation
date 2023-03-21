@@ -1,6 +1,6 @@
 //
 //
-#ifdef ILP
+#ifdef USEILP
 #ifndef DELTA_ORIENTATIONS_ILP_H
 #define DELTA_ORIENTATIONS_ILP_H
 

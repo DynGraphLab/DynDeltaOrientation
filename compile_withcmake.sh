@@ -1,47 +1,38 @@
 #!/bin/bash
 
-# args
-if [ "$#" -ne 2 ]; then
-    echo "Using Release and logging false"
-    BUILDTYPE="Release"
-    LOGGING="false"
-else
-BUILDTYPE=$1
-LOGGING=$2
-fi
-# build-type options: Release,Debug
-declare dynwmis_buildtype=$BUILDTYPE
-# logging: true/false
-declare dynwmis_is_logging=$LOGGING
+cd "${0%/*}" || exit  # Run from current directory (source directory) or exit
 
-# determine CPUs
-declare NCORES=4
-declare unamestr=$(uname)
-if [[ "$unamestr" == "Linux" ]]; then
-    NCORES=$(grep -c ^processor /proc/cpuinfo)
-fi
-
-if [[ "$unamestr" == "Darwin" ]]; then
-    NCORES=$(sysctl -n hw.ncpu)
+if [[ -z "$NCORES" ]]; then 
+    case "$(uname)" in
+        Darwin)
+            NCORES=$(sysctl -n hw.ncpu)
+            ;;
+        *)
+            NCORES=$(getconf _NPROCESSORS_ONLN 2>/dev/null)
+            ;;
+    esac
+    [ -n "$NCORES" ] || NCORES=4
 fi
 
 # build
+rm -rf deploy
 rm -rf build
 mkdir build
-cd build
-if [[ "$unamestr" == "Linux" ]]; then
-    cmake ../ -DCMAKE_BUILD_TYPE=${dynwmis_buildtype} -DDELTA_ORIENTATIONS_IS_LOGGING=${dynwmis_is_logging} -DGurobi_DIR="${GUROBI_HOME}"
-fi
-if [[ "$unamestr" == "Darwin" ]]; then
-    cmake ../ -DCMAKE_BUILD_TYPE=${dynwmis_buildtype} -DDELTA_ORIENTATIONS_IS_LOGGING=${dynwmis_is_logging} -DGurobi_DIR="${GUROBI_HOME}"
-fi
-make -j $NCORES
 
-# test
-ctest
 
-# deploy
-cmake --install .
-cd ..
+ADDITIONAL_ARGS="$1"
+echo $ADDITIONAL_ARGS
+(cd build && \
+    cmake .. -DCMAKE_BUILD_TYPE=Release $ADDITIONAL_ARGS && \
+    make -j $NCORES)
+
+echo
+echo "Copying files into 'deploy'"
+
+
+mkdir deploy
+cp build/delta-orientations deploy
+cp build/convert_metis_seq deploy
+
 
 echo "Build completed."
