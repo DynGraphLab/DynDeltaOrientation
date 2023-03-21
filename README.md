@@ -1,8 +1,17 @@
-# delta-orientations
+# Dynamic Delta-Orientations
 This is repository implements and benchmarks state-of-the-art and new approaches to the problems of finding delta-orientations for sparse graphs.
 This is joint work between Jannick Borowitz, Ernestine Großmann, and Christian Schulz.
 
 A (fully) dynamic graph algorithm is a data structure that supports edge insertions, edge deletions, and answers certain queries that are specific to the problem under consideration. There has been a lot of research on dynamic algorithms for graph problems that are solvable in polynomial time by a static algorithm. We consider the fully dynamic edge orientation problem, also called fully dynamic Δ-orientation problem, which is to maintain an orientation of the edges of an undirected graph such that the out-degree is low. If edges are inserted or deleted, one may have to flip the orientation of some edges in order to avoid vertices having a large out-degree. While there has been theoretical work on dynamic versions of this problem, currently has been little effort in experimentation. We close this gap and engineer a range of new dynamic edge orientation algorithms as well as algorithms from the current literature and make them available here. The best algorithm considered in this paper in terms of quality, based on a simple breadth-first search, computes the optimum result on more than 90% of the instances and is on average only 2.4% worse than the optimum solution. 
+
+Performance
+=====
+
+<p align="center">
+<img src="./pics/performance.png"
+  alt="performance"
+  width="601" height="558">
+</p>
 
 # Compilation 
 
