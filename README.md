@@ -29,7 +29,6 @@ In this case, the binaries, libraries and headers are in the folder ./build as w
 If you don't want to use ILPs, you can run
 
 ```console 
-```console
 ./compile_withcmake.sh -DILP=Off
 ```
 
