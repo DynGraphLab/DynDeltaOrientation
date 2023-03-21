@@ -35,6 +35,12 @@ internal max deg 82
 maxOutDegree 	 82
 ```
 
+For more options and algorithms run
+
+```console
+$ ./deploy/delta-orientations  --help
+```
+
 
 Licence
 =====
