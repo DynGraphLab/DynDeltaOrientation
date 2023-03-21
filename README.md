@@ -10,7 +10,7 @@ Performance
 <p align="center">
 <img src="./pics/performance.png"
   alt="performance"
-  width="601" height="558">
+  width="701" height="558">
 </p>
 
 # Compilation 
