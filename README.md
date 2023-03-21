@@ -1,4 +1,4 @@
-# Dynamic Delta-Orientations
+# Dynamic Delta-Orientations [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 This is repository implements and benchmarks state-of-the-art and new approaches to the problems of finding delta-orientations for sparse graphs.
 This is joint work between Jannick Borowitz, Ernestine Großmann, and Christian Schulz.
 
