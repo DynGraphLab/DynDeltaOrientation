@@ -14,12 +14,15 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake")
 include_directories(${INTERFACE_INCLUDE_DIRECTORIES})
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/extern/argtable3-3.0.3)
 
+option( ILP "build ILP" OFF)
 
-set(GUROBI_LIBRARY /home/cschulz/local/opt/gurobi912/lib)
+if(ILP)
+set(GUROBI_LIBRARY "$ENV{GUROBI_HOME}/lib")
 find_package(Gurobi REQUIRED)
 
 MESSAGE("Gurobi: include header files: ${GUROBI_INCLUDE_DIRS}")
 include_directories(${GUROBI_INCLUDE_DIRS})
+endif()
 
 SET(DELTA-ORIENTATIONS_INCLUDE_DIRS
         lib
@@ -78,19 +81,22 @@ if (NOT DEFINED DELTA_ORIENTATIONS_IS_LOGGING)
 endif ()
 add_compile_definitions(DELTAORI_IS_LOGGING=${DELTA_ORIENTATIONS_IS_LOGGING})
 
-set(GUROBI_CXX_LIBRARY "$ENV{GUROBI_HOME}/lib/libgurobi_g++5.2.a")
 
 # Executables
+if(ILP)
+set(GUROBI_CXX_LIBRARY "$ENV{GUROBI_HOME}/lib/libgurobi_g++5.2.a")
 add_executable(${DELTA-ORIENTATIONS} app/${DELTA-ORIENTATIONS}.cpp $<TARGET_OBJECTS:${DELTA-ORIENTATIONS_LIB}>)
 target_link_libraries(${DELTA-ORIENTATIONS} optimized ${GUROBI_CXX_LIBRARY})
 target_link_libraries(${DELTA-ORIENTATIONS} gurobi_g++5.2 gurobi91)
 set(CMAKE_EXE_LINKER_FLAGS "-L$ENV{GUROBI_HOME}/lib")
-
-
 set (CMAKE_SHARED_LINKER_FLAGS "-lgurobi_c++ -lgurobi95, --as-needed")
+else()
+add_executable(${DELTA-ORIENTATIONS} app/${DELTA-ORIENTATIONS}.cpp $<TARGET_OBJECTS:${DELTA-ORIENTATIONS_LIB}>)
+endif()
 
 add_executable(convert_metis_seq app/metis_to_sequence.cpp $<TARGET_OBJECTS:libconvert> )
 install(TARGETS convert_metis_seq DESTINATION ./)
+
 
 # install
 set(CMAKE_INSTALL_PREFIX ../deploy)

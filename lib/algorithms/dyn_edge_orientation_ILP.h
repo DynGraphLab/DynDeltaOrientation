@@ -1,6 +1,6 @@
 //
 //
-
+#ifdef ILP
 #ifndef DELTA_ORIENTATIONS_LOCALSEARCHILP_H
 #define DELTA_ORIENTATIONS_LOCALSEARCHILP_H
 
@@ -29,3 +29,4 @@ class dyn_edge_orientation_ILP : public dyn_edge_orientation {
  };
 
 #endif  // DELTA_ORIENTATIONS_LOCALSEARCHILP_H
+#endif

@@ -1,6 +1,6 @@
 //
 //
-
+#ifdef ILP
 #ifndef DELTA_ORIENTATIONS_ILP_H
 #define DELTA_ORIENTATIONS_ILP_H
 
@@ -32,3 +32,4 @@ void solveUsingRelaxedILP(graph_access& orientation, dyn_graph_access& G, const 
 
 
 #endif  // DELTA_ORIENTATIONS_ILP_H
+#endif  // ILP 

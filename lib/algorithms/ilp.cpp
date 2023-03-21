@@ -1,7 +1,7 @@
 //
 //
 
-
+#ifdef ILP
 #include <algorithm>
 #include <iostream>
 #include <memory>
@@ -199,4 +199,4 @@ void solveUsingRelaxedILP(graph_access& orientation, dyn_graph_access& G, const 
     }
 }
 
-
+#endif

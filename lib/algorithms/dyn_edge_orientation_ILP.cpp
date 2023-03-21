@@ -1,6 +1,6 @@
 //
 //
-
+#ifdef ILP
 #include "dyn_edge_orientation_ILP.h"
 #include "ilp.h"
 
@@ -51,3 +51,4 @@ void dyn_edge_orientation_ILP::solveILP() {
         } endfor
         
 }
+#endif
