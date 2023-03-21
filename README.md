@@ -17,13 +17,17 @@ $ ./deploy/delta-orientations examples/youtube-u-growth.seq --algorithm=NAIVE
 io took 4.60033
 time 		 0.922766
 maxOutDegree 	 118
+```
 
+```console
 ./deploy/delta-orientations examples/youtube-u-growth.seq --algorithm=MAXDECENDING --depth=10
 io took 4.48079
 time 		 4.0129
 internal max deg 78
 maxOutDegree 	 78
+```
 
+```console
 ./deploy/delta-orientations examples/youtube-u-growth.seq --algorithm=KFLIPS --flips=10
 io took 4.41465
 time 		 9.14307
