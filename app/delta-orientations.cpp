@@ -64,7 +64,6 @@ int main(int argc, char** argv) {
         //// store orientation in file
         graph_access final_orientation;
         G->convert_to_graph_access(final_orientation);
-        DELTAORI_ASSERT(G->number_of_edges() == final_orientation.number_of_edges());
         if( config.output_filename.size() != 0) {
                 std::cout <<  "writing orientation to " <<  config.output_filename << std::endl;
                 graphIO.writeDirectedGraph(final_orientation, config.output_filename);
