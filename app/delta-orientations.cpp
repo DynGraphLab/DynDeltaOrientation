@@ -62,11 +62,10 @@ int main(int argc, char** argv) {
         std::cout <<  "maxOutDegree \t " <<  G->maxDegree()  << std::endl;
 
         //// store orientation in file
-        graph_access final_orientation;
-        G->convert_to_graph_access(final_orientation);
         if( config.output_filename.size() != 0) {
-                std::cout <<  "writing orientation to " <<  config.output_filename << std::endl;
-                graphIO.writeDirectedGraph(final_orientation, config.output_filename);
+                std::cout <<  "currently unsupported" << std::endl;
+                //std::cout <<  "writing orientation to " <<  config.output_filename << std::endl;
+                //graphIO.writeDirectedGraph(G, config.output_filename);
         }
 
 
