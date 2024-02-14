@@ -42,7 +42,7 @@ SET(DELTA-ORIENTATIONS delta-orientations)
 #SET(CMAKE_BUILD_TYPE Debug)
 MESSAGE("${CMAKE_BUILD_TYPE}")
 
-#add_definitions(-g -pg)
+add_definitions(-fpermissive)
 
 
 SET(DELTA-ORIENTATIONS_CXX_FILES
