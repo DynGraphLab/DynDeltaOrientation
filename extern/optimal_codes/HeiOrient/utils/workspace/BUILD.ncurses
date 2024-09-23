@@ -1,0 +1,16 @@
+load("@rules_foreign_cc//foreign_cc:defs.bzl", "configure_make")
+
+filegroup(
+    name = "srcs",
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)
+configure_make(
+    name = "ncurses_lib",
+    configure_options = ["--enable-widec",  "--with-pthread","--with-libtool"],
+    visibility = ["//visibility:public"],
+    lib_source = "@ncurses//:srcs",
+     out_lib_dir = "lib",
+     configure_in_place= 1,
+    out_static_libs = ["libncursestw.a"],
+)

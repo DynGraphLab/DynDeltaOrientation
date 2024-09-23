@@ -1,0 +1,10 @@
+cc_import(
+    name = "libncurses",
+    static_library = "lib/libncurses.a",
+    visibility = ["//visibility:public"],
+    hdrs =["include/curses.h"],
+    deps=["tinfo","hdrs"],
+    includes=["include"],
+)
+cc_import(name="tinfo",static_library = "lib/libtinfo.a",)
+cc_library(name="hdrs",hdrs=["include/ncurses.h"]+glob(["include/ncursesw/*.h"]), includes=["include"])

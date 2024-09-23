@@ -1,0 +1,47 @@
+load("@rules_cc//cc:defs.bzl", "cc_library")
+
+cc_library(
+    name = "edge_orientation",
+    srcs = [
+        "bfs.cc",
+        "blumenstock_kowalik.cc",
+        "combined.cc",
+        "dfs.cc",
+        "empty_to_flip.cc",
+        "ilp.cc",
+        "naive.cc",
+        "resort.cc",
+        "two_approx.cc",
+        "stats.cc",
+    ],
+    hdrs = [
+        "algorithm_impl.h",
+        "bfs.h",
+        "blumenstock_kowalik.h",
+        "graph_to_bipartite_transformer.h",
+        "combined.h",
+        "dfs.h",
+        "empty_to_flip.h",
+        "ilp.h",
+        "naive.h",
+        "resort.h",
+        "two_approx.h",
+        "stats.h",
+    ],
+    visibility = ["//visibility:public"],
+    deps = [
+        "//app:app_io_cc_proto",
+        "//app/algorithms:algorithm_base_impl_lib",
+        "//ds:edge_orientation",
+        "//ds:empty_problem",
+        "//ds:undirected_graph",
+        "//edge_orientation/blumenstock:kowalik",
+        "//edge_orientation/flows:push_relabel",
+        "//edge_orientation/ds",
+        "//edge_orientation/ilp",
+        "//edge_orientation/tools",
+        "@com_google_absl//absl/status:statusor",
+    ],
+    #set alwayslink to make sure register is called
+    alwayslink = 1,
+)

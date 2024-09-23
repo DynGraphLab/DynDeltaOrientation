@@ -1,0 +1,22 @@
+# This is a Spack Environment file.
+#
+# It describes a set of packages to be installed, along with
+# configuration settings.
+spack:
+  # add package specs to the `specs` list
+  specs:
+   # - bazel%gcc
+  - python@3.8
+    #- ncurses
+    #- tbb
+   # - gmp
+  # - soplex
+  - py-pip
+  - openmpi
+  view: true
+  concretizer:
+    unify: when_possible
+  config:
+    install_missing_compilers: true
+  repos:
+  - ./spack_packages

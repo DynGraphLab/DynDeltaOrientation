@@ -1,0 +1,80 @@
+load("@rules_foreign_cc//foreign_cc:defs.bzl", "cmake")
+
+filegroup(
+    name = "all",
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)
+
+cmake(
+    name = "gperftools_build",
+    cache_entries =
+        select({
+            ":apple": {
+                "gperftools_build_benchmark": "OFF",
+                "DEFAULT_BUILD_HEAP_CHECKER": "OFF",
+                "GPERFTOOLS_BUILD_CPU_PROFILER": "ON",
+                "BUILD_TESTING": "ON",
+                "CMAKE_C_FLAGS": "-fPIC",
+                "gperftools_enable_libunwind": "OFF",
+                "gperftools_enable_frame_pointers": "ON",
+                "BUILD_SHARED_LIBS": "NO",
+                "CMAKE_AR": "libtool",
+            },
+            "//conditions:default": {
+                "gperftools_build_benchmark": "OFF",
+                "BUILD_TESTING": "OFF",
+                "CMAKE_C_FLAGS": "-fPIC",
+                #  "gperftools_enable_libunwind":"OFF",
+                #  "gperftools_enable_frame_pointers":"ON",
+                "BUILD_SHARED_LIBS": "NO",
+            },
+        }),
+    lib_source = "@gperftools//:all",
+    linkopts = [
+        "-lpthread",
+        "-Wl",
+    ],
+    out_static_libs = select({
+        ":debug_tcmalloc": ["libtcmalloc_debug.a"],
+        "//conditions:default": [
+            "libtcmalloc_and_profiler.a",
+            "liblogging.a",
+            "libspinlock.a",
+            "libsysinfo.a",
+            "libmaybe_threads.a",
+        ],
+    }),
+    alwayslink = 1,
+    #targets = [
+    #    "install-libLTLIBRARIES", "install-perftoolsincludeHEADERS",
+    #]
+)
+
+config_setting(
+    name = "disable_tcmalloc",
+    values = {"define": "tcmalloc=disabled"},
+)
+
+config_setting(
+    name = "apple",
+    values = {"define": "apple=enabled"},
+)
+
+config_setting(
+    name = "debug_tcmalloc",
+    values = {"define": "tcmalloc=debug"},
+)
+
+config_setting(
+    name = "gperftools_tcmalloc",
+    values = {"define": "tcmalloc=gperftools"},
+)
+
+cc_library(
+    name = "gperftools",
+    visibility = ["//visibility:public"],
+    deps = [
+        "gperftools_build",
+    ],
+)

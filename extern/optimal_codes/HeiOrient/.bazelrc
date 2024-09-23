@@ -1,0 +1,6 @@
+build --action_env=BAZEL_CXXOPTS=-std=c++20
+build --cxxopt=-std=c++20 --cxxopt=-frecord-gcc-switches #--cxxopt=-stdlib=libc++ # for mac
+build:opt --copt=-O3 --cxxopt=-O3 --cxxopt=-march=native --cxxopt=-mavx --cxxopt=-finline-functions  --cxxopt=-funroll-loops
+build  --stamp --workspace_status_command="$PWD/stamp.sh"
+build:debug -c dbg
+build:debug --features=oso_prefix_is_pwd

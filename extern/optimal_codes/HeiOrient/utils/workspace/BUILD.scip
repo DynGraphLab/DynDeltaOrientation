@@ -1,0 +1,35 @@
+load("@rules_foreign_cc//foreign_cc:defs.bzl", "cmake")
+
+filegroup(
+    name = "all",
+    srcs = glob(["**"]),
+    visibility = ["//visibility:public"],
+)
+
+cmake(
+    name = "scip",
+    lib_source = "@scip//:all",
+    alwayslink = 1,
+    build_args =["-j8"],
+    cache_entries = {
+"GMP":"ON", 
+"PAPILO":"OFF",
+"ZIMPL":"OFF",
+"IPOPT":"OFF",
+       "CMAKE_Fortran_COMPILER_WORKS": "1",
+        "SHARED":"false",
+        "CMAKE_FIND_LIBRARY_SUFFIXES": ".a",
+        "Readline_FOUND":"OFF",
+        "BUILD_SHARED_LIBS":"OFF",
+        "SYM":"sbliss",
+	 "CMAKE_INSTALL_LIBDIR":"lib",
+"READLINE":"OFF",
+    },
+    env = {
+        "LD" : "",
+    },
+    visibility = ["//visibility:public"],
+    lib_name = "libscip",
+    out_static_libs =["libscip.a","libbliss.a"],
+)
+

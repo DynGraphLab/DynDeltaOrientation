@@ -1,0 +1,31 @@
+licenses(["by_exception_only"])  # Gurobi
+
+# This rule is only built if a glob() call fails.
+genrule(
+    name = "error-message",
+    outs = ["error-message.h"],
+    cmd = "echo 'error: Gurobi >9.5.1 is not installed at {gurobi_home}' && false",  # noqa
+    visibility = ["//visibility:private"],
+)
+
+GUROBI_C_HDRS = glob([
+    "gurobi-distro/include/gurobi_c.h",
+]) or [":error-message.h"]
+
+GUROBI_CXX_HDRS = glob([
+    "gurobi-distro/include/gurobi_c.h",
+    "gurobi-distro/include/gurobi_c++.h",
+]) or [":error-message.h"]
+
+cc_library(
+    name = "gurobi_cxx",
+    hdrs = GUROBI_CXX_HDRS,
+    includes = ["gurobi-distro/include"],
+    linkopts = [
+        "-L{gurobi_home}/lib",
+        "-lgurobi110",
+        "-lgurobi_c++",
+        "-Wl,-rpath,{gurobi_home}/lib",
+    ],
+    visibility = ["//visibility:public"],
+)

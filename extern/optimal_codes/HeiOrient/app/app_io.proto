@@ -1,0 +1,126 @@
+syntax = "proto3";
+
+package rpo.app.app_io;
+
+// import Duration and timestamp from google
+import "google/protobuf/duration.proto";
+import "google/protobuf/timestamp.proto";
+
+message Hypergraph {
+  string name = 1;  // is not unique
+  string edge_weight_type = 2;
+
+  // primary collection and sort, should be in sync with other
+  string collection = 3;
+  string file_path = 4;  // later to be replaced/deprecated by server look up.
+                         // relative to collections ROOT
+  int64 node_count = 5;
+  int64 edge_count = 6;
+  string format = 8;
+  string node_weight_type = 9;
+  string sort = 11;
+}
+
+message Algorithm {
+  string algorithm_name = 1;
+  message ConfigField {
+    string name = 1;
+    enum ConfigType {
+      CONFIG_TYPE_STRING = 0;
+      CONFIG_TYPE_INT64 = 1;
+      CONFIG_TYPE_DOUBLE = 2;
+    }
+    bool required = 2;
+  }
+  repeated ConfigField configs = 2;
+}
+// Algorithm config is used for selecting a specific algorithm,
+// which should be defined somewhere (e.g. in a textproto )
+message AlgorithmConfig {
+  string algorithm_name = 1;
+  string data_structure = 2;  // Transformers allow to convert one problem to another, setting this
+                              // is optional for all except the first data_structure.
+  map<string, string> string_params = 3;
+  map<string, int64> int64_params = 4;
+  map<string, double> double_params = 5;
+  map<string, bool> bool_params = 6;
+}
+
+message RunConfig {
+  repeated AlgorithmConfig algorithm_configs =
+      2;               // apply multiple algorithms one after another must be non empty
+  int64 capacity = 3;  // capacity used in this experiment -1 will use the node
+                       // weights as capacity
+  string short_name = 4;
+  bool is_external = 5;
+  string author = 6;
+  string external_name = 7;      // TODO remove
+  string external_settings = 8;  // storage for external settings and keywords
+}
+message Command {
+  Hypergraph hypergraph = 1;
+  RunConfig config = 2;
+  string command = 3;
+}
+
+// Information set by the controller programm
+message Machine {
+  string host_name = 1;
+  string build_user = 2;
+}
+message DebugInformation {
+  map<string, string> string_info = 3;
+  map<string, int64> int64_info = 4;
+  map<string, double> double_info = 5;
+  map<string, bool> bool_info = 6;
+}
+message RunInformation {
+  google.protobuf.Duration algo_duration = 1;  // this is the self reported duration
+  google.protobuf.Timestamp start_time = 2;    // start time includes loading time
+  google.protobuf.Timestamp end_time = 3;
+  Machine machine = 4;  // machine that build the code
+  string git_sha = 5;   // return the sha hash of the commit used
+  string git_describe = 6;
+  string malloc_implementation = 7;
+  bool edge_hashing_enabled = 8;
+  string exec_host_name = 9;  // hostname of the executing machine
+  string exec_user_name = 10;
+  double max_allocated_memory_in_mb = 11;
+  DebugInformation debug_information = 12;
+}
+message AlgorithmRunInformation {
+  google.protobuf.Duration algo_duration = 1;  // this is the self reported duration
+  google.protobuf.Timestamp start_time = 2;
+  google.protobuf.Timestamp end_time = 3;
+  // size & weight after this step
+  int64 size = 4;
+  int64 weight = 5;
+  // reserved 13;
+  double quality = 13;
+  AlgorithmConfig algorithm_config = 6;
+  bool is_exact = 7;
+  int64 edge_count = 8;
+  int64 node_count = 9;
+  int64 free_edges = 10;
+  DebugInformation debug_information = 11;
+  bool transformer = 12;  // whether this step was a transformer
+  repeated Quality qualities = 14;
+}
+
+message Result {
+  RunConfig run_config = 1;
+  Hypergraph hypergraph = 6;
+  int64 size = 2;
+  int64 weight = 3;
+  RunInformation run_information = 4;
+  repeated AlgorithmRunInformation algorithm_run_informations = 5;
+  bool is_exact = 7;
+  double quality = 8;
+  repeated Quality qualities = 9;
+}
+
+message Quality {
+  double score = 1;
+  string name = 2;
+  string implementation = 3;
+}

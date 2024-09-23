@@ -1,0 +1,18 @@
+package(default_visibility = ["//visibility:public"])
+
+cc_library(
+    name = "matplotlibcpp17",
+    hdrs = glob(
+        include = [
+            "include/matplotlibcpp17/*.h",
+        ],
+    ),
+    copts = [
+        "-fexceptions",
+        "-Wno-undefined-inline",
+        "-Wno-pragma-once-outside-header",
+    ],
+    includes = ["include"],
+    strip_include_prefix = "include",
+    deps=["@pybind11",],
+)
