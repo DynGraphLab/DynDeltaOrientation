@@ -1,38 +1,51 @@
 #!/bin/bash
 
-cd "${0%/*}" || exit  # Run from current directory (source directory) or exit
+# args
+if [ "$#" -ne 2 ]; then
+    echo "Using Release and logging false"
+    BUILDTYPE="Release"
+    LOGGING="false"
+else
+BUILDTYPE=$1
+LOGGING=$2
+fi
+# build-type options: Release,Debug
+declare dynwmis_buildtype=$BUILDTYPE
+# logging: true/false
+declare dynwmis_is_logging=$LOGGING
 
-if [[ -z "$NCORES" ]]; then 
-    case "$(uname)" in
-        Darwin)
-            NCORES=$(sysctl -n hw.ncpu)
-            ;;
-        *)
-            NCORES=$(getconf _NPROCESSORS_ONLN 2>/dev/null)
-            ;;
-    esac
-    [ -n "$NCORES" ] || NCORES=4
+# determine CPUs
+declare NCORES=4
+declare unamestr=$(uname)
+if [[ "$unamestr" == "Linux" ]]; then
+    NCORES=$(grep -c ^processor /proc/cpuinfo)
+fi
+
+if [[ "$unamestr" == "Darwin" ]]; then
+    NCORES=$(sysctl -n hw.ncpu)
 fi
 
 # build
-rm -rf deploy
 rm -rf build
 mkdir build
+cd build
+if [[ "$unamestr" == "Linux" ]]; then
+    cmake ../ -DCMAKE_BUILD_TYPE=${dynwmis_buildtype} -DDELTA_ORIENTATIONS_IS_LOGGING=${dynwmis_is_logging} -DGurobi_DIR="${GUROBI_HOME}"
+fi
+if [[ "$unamestr" == "Darwin" ]]; then
+    cmake ../ -DCMAKE_BUILD_TYPE=${dynwmis_buildtype} -DDELTA_ORIENTATIONS_IS_LOGGING=${dynwmis_is_logging} -DGurobi_DIR="${GUROBI_HOME}"
+fi
+make -j $NCORES
 
+# test
+ctest
 
-ADDITIONAL_ARGS="$1"
-echo $ADDITIONAL_ARGS
-(cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release $ADDITIONAL_ARGS && \
-    make -j $NCORES)
+# deploy
+cmake --install .
+cd ..
 
-echo
-echo "Copying files into 'deploy'"
-
-
-mkdir deploy
-cp build/delta-orientations deploy
-cp build/convert_metis_seq deploy
-
+cd extern/optimal_codes/HeiOrient/
+g++ -I. -Iothers -std=c++2a  header_only/edge_orientation.cc  -O3 -march=native -DNDEBUG -o opt_edge_or
+cp opt_edge_or ../../../deploy/
 
 echo "Build completed."

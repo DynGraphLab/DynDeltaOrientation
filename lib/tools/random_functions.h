@@ -1,6 +1,8 @@
 /******************************************************************************
  * random_functions.h
  * *
+ * Source of KaHIP -- Karlsruhe High Quality Partitioning.
+ * Christian Schulz <christian.schulz.phone@gmail.com>
  *****************************************************************************/
 
 #ifndef RANDOM_FUNCTIONS_RMEPKWYT

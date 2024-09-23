@@ -1,6 +1,8 @@
 /******************************************************************************
  * definitions.h
  *
+ * Christian Schulz <christian.schulz.phone@gmail.com>
+ * modified by: Jannick Borowitz
  *****************************************************************************/
 
 #ifndef DEFINITIONS_H_JB_DELTA_ORIENTATIONS
@@ -65,7 +67,7 @@ struct DynEdge {
 /**
  * algorithms
  */
-typedef enum { ILP, STATIC_ILP, BFSCS, KFLIPS, RWALKCS, MAXDECENDING, BRODAL_FAGERBERGCS, NAIVE  } DeltaOrientationsAlgorithmType;
+typedef enum { ILP, NAIVEOPT, IMPROOPT, STATIC_ILP, BFS_PATH, BFSCS, BFSMAX, KFLIPS, KFLIPSCS, RWALK, RWALKMAX, RWALKCS, DFS_PATH, MAXDECENDING, BRODAL_FAGERBERG, BRODAL_FAGERBERGCS, NAIVE, HASHINGUM, GOOGLEHASHING, STRONG_OPT, STRONG_OPT_DFS, IMPROVED_OPT, IMPROVED_OPT_DFS} DeltaOrientationsAlgorithmType;
 
 /**
  * ApplicationStyle

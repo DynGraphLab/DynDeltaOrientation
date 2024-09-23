@@ -48,7 +48,6 @@ int graph_io::writeGraph(graph_access &G, std::string filename) {
     return 0;
 }
 
-
 int graph_io::writeDirectedGraph(graph_access &G, std::string filename) {
     std::ofstream f(filename.c_str());
     f << G.number_of_nodes() << " " << G.number_of_edges() << std::endl;

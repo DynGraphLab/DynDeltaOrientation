@@ -1,4 +1,5 @@
 //
+// Created by Jannick Borowitz on 06.06.22.
 //
 
 #ifndef DELTA_ORIENTATIONS_MORE_HASHER_H

@@ -7,6 +7,7 @@
 #include "DeltaOrientationsResult.h"
 #include "DynEdgeOrientation.h"
 #include "dyn_graph_access.h"
+#include "priority_queues/bucket_pq.h"
 
 class dyn_edge_orientation_MaxDecending : public dyn_edge_orientation {
         public:

@@ -70,7 +70,7 @@ int main(int argn, char **argv)
                            sequence.push_back(pair);
                         } else {
 
-                                if( pairs[node].find(target) == pairs[node].end()) {
+                                if( pairs[node].find(target) == pairs[node].end() && node < target) {
                                         sequence.push_back(pair); 
                                         pairs[node][target] = true;
                                         pairs[target][node] = true;

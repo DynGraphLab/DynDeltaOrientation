@@ -37,6 +37,9 @@ class DeltaOrientationsConfig {
     // Brodal & Fagerberg
     unsigned delta = 0; // maintain delta-orientation
 
+    // num of random queries that we should perform once the orientation is computed
+    unsigned num_queries = 0;
+
     double bfgrowthfactor = 2;
 
     DeltaOrientationsApplicationStyle applicationStyle = ONCE;

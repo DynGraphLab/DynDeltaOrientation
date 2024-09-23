@@ -1,5 +1,5 @@
-#ifndef DELTA_ORIENTATIONS_RWALKCS_H
-#define DELTA_ORIENTATIONS_RWALKCS_H
+#ifndef DELTA_ORIENTATIONS_impro_opt_H
+#define DELTA_ORIENTATIONS_impro_opt_H
 
 #include <memory>
 
@@ -9,9 +9,9 @@
 #include "dyn_graph_access.h"
 #include "priority_queues/bucket_pq.h"
 
-class dyn_edge_orientation_RWalkCS : public dyn_edge_orientation {
+class dyn_edge_orientation_impro_opt : public dyn_edge_orientation {
         public:
-                dyn_edge_orientation_RWalkCS(const std::shared_ptr<dyn_graph_access>& GOrientation, const DeltaOrientationsConfig& config,
+                dyn_edge_orientation_impro_opt(const std::shared_ptr<dyn_graph_access>& GOrientation, const DeltaOrientationsConfig& config,
                                 DeltaOrientationsResult& result);
 
                 void handleInsertion(NodeID source, NodeID target) override;
@@ -38,7 +38,7 @@ class dyn_edge_orientation_RWalkCS : public dyn_edge_orientation {
                 }
         private:
 
-                bool rwalk(NodeID source);
+                void bfs(NodeID source);
                 void checkdegrees() {
                         int max = 0;
                         for( unsigned i = 0; i < GOrientation->number_of_nodes(); i++) {
@@ -60,7 +60,6 @@ class dyn_edge_orientation_RWalkCS : public dyn_edge_orientation {
                                         exit(0);
                                 }
                         }
-                        
                         if( max != m_max_degree ) {
                                 std::cout <<  "max degree does not match"  << std::endl;
                                 exit(0);
@@ -87,13 +86,13 @@ class dyn_edge_orientation_RWalkCS : public dyn_edge_orientation {
                         while( m_degree_buckets[m_max_degree].size() == 0) m_max_degree--;
                 };
 
-                std::vector<bool> m_touched;
+                std::vector<int> m_parent;
+                std::vector<NodeID> m_depth;
                 std::vector< std::vector<NodeID> > m_degree_buckets;
                 std::vector<NodeID> m_bucket_pos;
                 std::vector<int> m_degree;
                 std::vector< std::vector<NodeID> > m_adj;
                 int m_max_degree;
-                std::vector< NodeID > path; 
 };
 
 
