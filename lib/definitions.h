@@ -65,7 +65,7 @@ struct DynEdge {
 /**
  * algorithms
  */
-typedef enum { ILP, STATIC_ILP, BFSCS, KFLIPS, RWALKCS, MAXDECENDING, BRODAL_FAGERBERGCS, NAIVE  } DeltaOrientationsAlgorithmType;
+typedef enum { ILP, STATIC_ILP, BFSCS, KFLIPS, RWALKCS, MAXDECENDING, BRODAL_FAGERBERGCS, NAIVE, CCHHQRS } DeltaOrientationsAlgorithmType;
 
 /**
  * ApplicationStyle

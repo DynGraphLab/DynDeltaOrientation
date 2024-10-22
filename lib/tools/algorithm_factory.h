@@ -7,6 +7,7 @@
 #include "dyn_edge_orientation_Naive.h"
 #include "dyn_edge_orientation_MaxDecending.h"
 #include "dyn_edge_orientation_RWalkCS.h"
+#include "dyn_edge_orientation_CCHHQRS.h"
 
 //
 //
@@ -41,6 +42,9 @@ static std::unique_ptr<dyn_edge_orientation> getdyn_edge_orientation_instance(De
             break;
         case MAXDECENDING:
             solverPtr = std::make_unique<dyn_edge_orientation_MaxDecending>(std::forward<Args>(args)...);
+            break;
+        case CCHHQRS:
+            solverPtr = std::make_unique<dyn_edge_orientation_CCHHQRS>(std::forward<Args>(args)...);
             break;
 #ifdef USEILP
         case STATIC_ILP:

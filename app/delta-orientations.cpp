@@ -13,6 +13,7 @@
 #include "DeltaOrientationsConfig.h"
 #include "DeltaOrientationsResult.h"
 #include "dyn_edge_orientation_BFSCS.h"
+#include "dyn_edge_orientation_CCHHQRS.h"
 #include "dyn_edge_orientation_ILP.h"
 #include "algorithm_factory.h"
 #include "graph_io.h"

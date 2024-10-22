@@ -34,6 +34,11 @@ class DeltaOrientationsConfig {
     unsigned rwLengthBound = 10;
     unsigned bfsDepthBound = 10;
 
+    // CCHHQRS
+    unsigned b = 16;        // TODO default value?
+    unsigned lambda = 3;    // TODO default value?
+    unsigned theta = 1;     // 0 or 1
+
     // Brodal & Fagerberg
     unsigned delta = 0; // maintain delta-orientation
 

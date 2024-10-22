@@ -35,11 +35,14 @@ int parse_parameters(int argn, char **argv,
         struct arg_int *time_limit_ilp                       = arg_int0(NULL, "time_limit_ilp", NULL, "Time limit given to the ILP.");
         struct arg_dbl *brodalfagerberg_growth               = arg_dbl0(NULL, "brodalfagerberg_growth", NULL, "Growth factor in brodal fagerberg.");
         struct arg_lit *relax_ilp                            = arg_lit0(NULL, "relax_ilp", "");
+        struct arg_int *b                                    = arg_int0(NULL, "b", NULL, "Number of copies of each edge in CCHHQRS.");
+        struct arg_int *lambda                               = arg_int0(NULL, "lambda", NULL, "Parameter in CCHHQRS.");
+        struct arg_int *theta                                = arg_int0(NULL, "theta", NULL, "Choice of invariant in CCHHQRS.");
 
 #ifdef USEILP
         struct arg_rex *algorithm                            = arg_rex0(NULL, "algorithm", "^(ILP|BFSCS|KFLIPS|RWALKCS|BFCS|MAXDECENDING|NAIVE)$", "ALGORITHM", 1, "Algorithm to use. One of {ILP, BFSCS, KFLIPS, RWALKCS, BRODAL_FAGERBERG, BFCS, MAXDECENDING, NAIVE}. Default: KFLIPS"  );
 #else 
-        struct arg_rex *algorithm                            = arg_rex0(NULL, "algorithm", "^(BFSCS|KFLIPS|RWALKCS|BFCS|MAXDECENDING|NAIVE)$", "ALGORITHM", 1, "Algorithm to use. One of {BFSCS, KFLIPS, RWALKCS, BRODAL_FAGERBERG, BFCS, MAXDECENDING, NAIVE}. Default: KFLIPS"  );
+        struct arg_rex *algorithm                            = arg_rex0(NULL, "algorithm", "^(BFSCS|KFLIPS|RWALKCS|BFCS|MAXDECENDING|NAIVE|CCHHQRS)$", "ALGORITHM", 1, "Algorithm to use. One of {BFSCS, KFLIPS, RWALKCS, BRODAL_FAGERBERG, BFCS, MAXDECENDING, NAIVE, CCHHQRS}. Default: KFLIPS"  );
 #endif
         
         struct arg_end *end                                  = arg_end(100);
@@ -133,6 +136,8 @@ int parse_parameters(int argn, char **argv,
                         orientation_config.algorithmType = MAXDECENDING;
                 } else if (strcmp("BFCS", algorithm->sval[0]) == 0) {
                         orientation_config.algorithmType = BRODAL_FAGERBERGCS;
+                } else if (strcmp("CCHHQRS", algorithm->sval[0]) == 0) {
+                        orientation_config.algorithmType = CCHHQRS;
                 } else {
                         fprintf(stderr, "Invalid algorithm: \"%s\"\n", algorithm->sval[0]);
                         exit(0);

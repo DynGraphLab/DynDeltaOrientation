@@ -47,11 +47,13 @@ add_definitions(-fpermissive)
 
 SET(DELTA-ORIENTATIONS_CXX_FILES
         lib/data_structure/dyn_graph_access.cpp
+        lib/data_structure/buckets.cpp
         lib/io/graph_io.cpp
         lib/tools/timer.cpp
         lib/tools/random_functions.cpp
         lib/algorithms/dyn_edge_orientation_ILP.cpp
         lib/algorithms/dyn_edge_orientation_BFSCS.cpp
+        lib/algorithms/dyn_edge_orientation_CCHHQRS.cpp
         lib/algorithms/dyn_edge_orientation_BrodalFagerbergCS.cpp
         lib/algorithms/dyn_edge_orientation_Naive.cpp
         lib/algorithms/dyn_edge_orientation_KFlipsCS.cpp
