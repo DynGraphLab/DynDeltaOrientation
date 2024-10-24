@@ -3,6 +3,7 @@
 
 #include <bits/stdc++.h>
 #include <memory>
+#include <vector>
 
 #include "DeltaOrientationsConfig.h"
 #include "DeltaOrientationsResult.h"
@@ -12,9 +13,9 @@
 
 class dyn_edge_orientation_CCHHQRS : public dyn_edge_orientation {
 public:
-  dyn_edge_orientation_CCHHQRS(const shared_ptr<dyn_graph_access> &GOrientation,
-                               const DeltaOrientationsConfig &config,
-                               DeltaOrientationsResult &result);
+  dyn_edge_orientation_CCHHQRS(
+      const std::shared_ptr<dyn_graph_access> &GOrientation,
+      const DeltaOrientationsConfig &config, DeltaOrientationsResult &result);
   void handleInsertion(NodeID source, NodeID target) override;
   void handleDeletion(NodeID source, NodeID target) override;
   void end() override {
@@ -22,16 +23,16 @@ public:
       for (DEdge *uv : vertices[i].out_edges) {
         // "complete" edges
         for (int j = 0; j < uv->count / config.b; j++) {
-          m_adj[i].push_back(uv->target->node);
+          m_adj[i].push_back(uv->target);
         }
         // "partial" edges
         // if there is a half edge, we break ties arbitrarily
         if (2 * (uv->count % config.b) == config.b) {
-          if (i > uv->target->node) {
-            m_adj[i].push_back(uv->target->node);
+          if (i > uv->target) {
+            m_adj[i].push_back(uv->target);
           }
         } else if (uv->count % config.b > config.b / 2) {
-          m_adj[i].push_back(uv->target->node);
+          m_adj[i].push_back(uv->target);
         }
       }
     }
@@ -55,15 +56,15 @@ public:
   }
 
 private:
-  vector<vector<NodeID>> m_adj; // For post processing only
-  map<pair<int, int>, DEdge> edges;
-  vector<Vertex> vertices;
-  void insert_directed(DEdge *uv);
-  void delete_directed(DEdge *uv);
-  void add(DEdge *uv);
-  void add_fast(DEdge *uv, list<pair<NodeID, int>>::iterator uv_iterator);
-  void remove(DEdge *uv);
-  list<pair<NodeID, int>>::iterator argmin_out(NodeID source);
+  std::vector<std::vector<NodeID>> m_adj; // For post processing only
+  std::vector<DEdge *> edge_allocator;    // TODO delete edges at the end
+  std::vector<Vertex> vertices;
+  void insert_directed(DEdge *uv, NodeID u);
+  void delete_directed(DEdge *uv, NodeID u);
+  void add(DEdge *uv, NodeID u);
+  // void add_fast(DEdge *uv, list<pair<NodeID, int>>::iterator uv_iterator);
+  void remove(DEdge *uv, NodeID v);
+  // list<pair<NodeID, int>>::iterator argmin_out(NodeID source);
 };
 
 #endif

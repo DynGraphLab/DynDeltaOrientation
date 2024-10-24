@@ -1,24 +1,32 @@
 #include "buckets.h"
+#include <vector>
 
 Buckets::Buckets() {}
-
+double lambda_precomp;
 Buckets::Buckets(const DeltaOrientationsConfig &config, int n) {
-  this->config = config;
-  buckets.resize(get_bucket_id(config.b * n) + 2);
+  // precompute lambda term, not needed to recompute everytime
+  // also do not store the config object in Bucket class
+  lambda_precomp = 1.0 / (log(1 + config.lambda));
+  // buckets.resize(get_bucket_id(config.b * n) + 2); // do not allocate all
+  // memory
 }
 
 Buckets::~Buckets() = default;
 
 int Buckets::get_bucket_id(const int du) const {
-  return static_cast<int>(log(du) / log(1 + config.lambda));
+  return static_cast<int>(log(du) * lambda_precomp);
 }
 
-void Buckets::add(DEdge *uv) {
-  int j = get_bucket_id(uv->source->out_degree);
+void Buckets::add(DEdge *uv, int out_degree, int bucket_v) {
+  int j = get_bucket_id(out_degree);
+  if (j >= buckets.size()) {
+    buckets.resize(j + 1);
+    // std::cout << buckets.size() << std::endl;
+  }
 
   buckets[j].bucket_elements.push_back(uv);
-  uv->location_in_neighbours = prev(buckets[j].bucket_elements.end());
-  uv->bucket = &buckets[j];
+  uv->location_in_neighbours = buckets[j].bucket_elements.size() - 1;
+  uv->bucket = j;
 
   // The bucket already exists (prev and next are up to date)
   if (buckets[j].bucketID == j) {
@@ -38,7 +46,7 @@ void Buckets::add(DEdge *uv) {
   }
   // Or insert
   else {
-    int j_self = uv->target->self_loop->bucket->bucketID;
+    int j_self = bucket_v;
     int pos = max_bucketID;
     int pos2 = -1;
     if (j <= j_self) {
@@ -60,13 +68,15 @@ void Buckets::add(DEdge *uv) {
 }
 
 // update the element after incrementing the out degree of the source
-void Buckets::update(DEdge *uv) {
-  int j = get_bucket_id(uv->source->out_degree);
-  int j_prev = uv->bucket->bucketID;
+void Buckets::update(DEdge *uv, int outdegree_u) {
+  int j = get_bucket_id(outdegree_u);
+  int j_prev = uv->bucket;
   if (j == j_prev) {
     return;
   }
-
+  if (j >= buckets.size()) {
+    buckets.resize(j + 1);
+  }
   if (j > max_bucketID) {
     max_bucketID = j;
   }
@@ -91,25 +101,35 @@ void Buckets::update(DEdge *uv) {
       buckets[j_prev].next = j;
       buckets[j].prev = j_prev;
     } else {
-      cerr << "update leads to a non consecutive bucket";
+      std::cerr << "update leads to a non consecutive bucket";
     }
   }
 
-  remove(uv);
+  remove(uv, buckets[uv->bucket].bucket_elements);
 
   buckets[j].bucketID = j;
   buckets[j].bucket_elements.push_back(uv);
-  uv->location_in_neighbours = prev(buckets[j].bucket_elements.end());
-  uv->bucket = &buckets[j];
+  uv->location_in_neighbours = (buckets[j].bucket_elements.size() - 1);
+  uv->bucket = j;
 }
 
-void Buckets::remove(DEdge *uv) {
-  uv->bucket->bucket_elements.erase(uv->location_in_neighbours);
-  uv->location_in_neighbours = uv->bucket->bucket_elements.end();
+void Buckets::remove(DEdge *uv,
+                     std::vector<DEdge *> &uv_bucket_bucket_elements) {
+  // uv->target->in_edges.buckets[uv->bucket]
+  // uv->bucket->bucket_elements.erase(uv->location_in_neighbours);
+  if (uv_bucket_bucket_elements.size() > 1) {
+    std::swap(uv_bucket_bucket_elements[uv->location_in_neighbours],
+              uv_bucket_bucket_elements[uv_bucket_bucket_elements.size() - 1]);
+    uv_bucket_bucket_elements[uv->location_in_neighbours]
+        ->location_in_neighbours = uv->location_in_neighbours;
+  }
+  uv_bucket_bucket_elements.resize(uv_bucket_bucket_elements.size() - 1);
 
-  int j = uv->bucket->bucketID;
+  uv->location_in_neighbours = uv_bucket_bucket_elements.size();
 
-  if (uv->bucket->bucket_elements.empty()) {
+  int j = uv->bucket;
+
+  if (uv_bucket_bucket_elements.empty()) {
     int p = buckets[j].prev;
     int n = buckets[j].next;
     if (n != -1) { // j is not max bucket
