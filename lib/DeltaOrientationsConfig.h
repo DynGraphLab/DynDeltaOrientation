@@ -36,9 +36,9 @@ public:
   unsigned bfsDepthBound = 10;
 
   // CCHHQRS
-  unsigned b = 16;     // TODO default value?
-  unsigned lambda = 3; // TODO default value?
-  unsigned theta = 1;  // 0 or 1
+  unsigned b = 10;
+  float lambda = 0.1;
+  unsigned theta = 0;     // 0 or 1
 
   // Brodal & Fagerberg
   unsigned delta = 0; // maintain delta-orientation

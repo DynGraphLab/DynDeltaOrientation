@@ -6,6 +6,9 @@ dyn_edge_orientation_CCHHQRS::dyn_edge_orientation_CCHHQRS(
     const std::shared_ptr<dyn_graph_access> &GOrientation,
     const DeltaOrientationsConfig &config, DeltaOrientationsResult &result)
     : dyn_edge_orientation(GOrientation, config, result) {
+  if (config.lambda == 0 || config.theta == 0 && config.b < 1/ config.lambda){
+    std::cerr << "Illegal choice of parameters" << std::endl;
+  }
 
   m_adj.resize(GOrientation->number_of_nodes());
   vertices.resize(GOrientation->number_of_nodes());
@@ -97,10 +100,7 @@ void dyn_edge_orientation_CCHHQRS::insert_directed(
     }
   }
 
-  if (vertices[u].out_degree >
-      std::max(config.b / 4.0,
-               (1.0 + config.lambda) * vertices[uw_min->target].out_degree +
-                   config.theta)) {
+  if (vertices[u].out_degree > std::max(static_cast<float> (config.b), (1 + config.lambda) * vertices[uw_min->target].out_degree + config.theta)){
     remove(uw_min, u);
     insert_directed(uw_min->mirror, uw_min->target);
   } else {
@@ -116,9 +116,7 @@ void dyn_edge_orientation_CCHHQRS::delete_directed(
   DEdge *ux = vertices[u]
                   .in_edges.buckets[vertices[u].in_edges.max_bucketID]
                   .bucket_elements.front();
-  if (vertices[ux->target].out_degree >
-      std::max(config.b / 4.0,
-               (1.0 + config.lambda) * vertices[u].out_degree + config.theta)) {
+  if (vertices[ux->target].out_degree > std::max(static_cast<float> (config.b), (1 + config.lambda) * vertices[u].out_degree + config.theta)){
     add(ux, u);
     delete_directed(ux->mirror, ux->target);
   } else {

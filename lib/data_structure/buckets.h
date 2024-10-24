@@ -22,6 +22,7 @@ public:
   explicit Buckets(const DeltaOrientationsConfig &config, int n);
   ~Buckets();
   int get_bucket_id(int du) const;
+  int b;
   void update(DEdge *uv, int outdegree_u);
   void add(DEdge *uv, int out_degree, int bucket_v);
   void add_fast(DEdge *uv);

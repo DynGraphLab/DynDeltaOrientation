@@ -7,14 +7,17 @@ Buckets::Buckets(const DeltaOrientationsConfig &config, int n) {
   // precompute lambda term, not needed to recompute everytime
   // also do not store the config object in Bucket class
   lambda_precomp = 1.0 / (log(1 + config.lambda));
+  b = config.b;
   // buckets.resize(get_bucket_id(config.b * n) + 2); // do not allocate all
   // memory
 }
 
 Buckets::~Buckets() = default;
 
-int Buckets::get_bucket_id(const int du) const {
-  return static_cast<int>(log(du) * lambda_precomp);
+int Buckets::get_bucket_id(const int du) const{
+  float f = b * 4;
+  float duf = du;
+  return static_cast<int>(log(std::max(duf, f)) * lambda_precomp);
 }
 
 void Buckets::add(DEdge *uv, int out_degree, int bucket_v) {
@@ -92,7 +95,7 @@ void Buckets::update(DEdge *uv, int outdegree_u) {
       buckets[j].prev = p;
       buckets[j_prev].prev = j;
       buckets[j].next = j_prev;
-    } else if (j = j_prev + 1) {
+    } else if (j == j_prev + 1) {
       int n = buckets[j_prev].next;
       if (n != -1) { // j_prev was not the highest bucket
         buckets[n].prev = j;
