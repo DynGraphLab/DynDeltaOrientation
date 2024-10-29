@@ -1,4 +1,4 @@
-# Engineering Fully Dynamic Exact $\Delta $-Orientation Algorithms
+# Engineering Fully Dynamic Exact $\Delta $-Orientation Algorithms and  Dynamic Delta-Orientations
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6a878c2175f74b2c923fe128f59d800a)](https://app.codacy.com/gh/DynGraphLab/DynDeltaOrientation/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
 
 This is repository implements and benchmarks state-of-the-art and new approaches to the problems of finding optimal delta-orientations for sparse graphs. This is joint work of Ernestine Großmann, Henrik Reinstädtler, Christian Schulz and Fabian Walliser. Prior Work in this repository is by Jannick Borowitz, Ernestine Großmann, and Christian Schulz.
