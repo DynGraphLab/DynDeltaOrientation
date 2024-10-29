@@ -39,7 +39,7 @@ int parse_parameters(int argn, char **argv,
 #ifdef USEILP
         struct arg_rex *algorithm                            = arg_rex0(NULL, "algorithm", "^(ILP|BFSCS|KFLIPS|RWALKCS|BFCS|MAXDECENDING|NAIVE)$", "ALGORITHM", 1, "Algorithm to use. One of {ILP, BFSCS, KFLIPS, RWALKCS, BRODAL_FAGERBERG, BFCS, MAXDECENDING, NAIVE}. Default: KFLIPS"  );
 #else 
-        struct arg_rex *algorithm                            = arg_rex0(NULL, "algorithm", "^(BFSCS|KFLIPS|RWALKCS|BFCS|MAXDECENDING|NAIVE)$", "ALGORITHM", 1, "Algorithm to use. One of {BFSCS, KFLIPS, RWALKCS, BRODAL_FAGERBERG, BFCS, MAXDECENDING, NAIVE}. Default: KFLIPS"  );
+        struct arg_rex *algorithm                            = arg_rex0(NULL, "algorithm", "^(BFSCS|KFLIPS|RWALKCS|BFCS|MAXDECENDING|NAIVE|NAIVEOPT|STRONGOPT|DFS_STRONGOPT|IMPROVEDOPT|DFS_IMPROVEDOPT)$", "ALGORITHM", 1, "Algorithm to use. One of {BFSCS, KFLIPS, RWALKCS, BRODAL_FAGERBERG, BFCS, MAXDECENDING, NAIVE, STRONGOPT, STRONGOPTDFS, IMPROVEDOPT, DFS_IMPROVEDOPT}. Default: KFLIPS"  );
 #endif
         
         struct arg_end *end                                  = arg_end(100);
@@ -133,6 +133,16 @@ int parse_parameters(int argn, char **argv,
                         orientation_config.algorithmType = MAXDECENDING;
                 } else if (strcmp("BFCS", algorithm->sval[0]) == 0) {
                         orientation_config.algorithmType = BRODAL_FAGERBERGCS;
+                 } else if (strcmp("STRONGOPT", algorithm->sval[0]) == 0) {
+                        orientation_config.algorithmType = STRONG_OPT;
+                } else if (strcmp("DFS_STRONGOPT", algorithm->sval[0]) == 0) {
+                        orientation_config.algorithmType = STRONG_OPT_DFS;
+                } else if (strcmp("IMPROVEDOPT", algorithm->sval[0]) == 0) {
+                        orientation_config.algorithmType = IMPROVED_OPT;
+                } else if (strcmp("DFS_IMPROVEDOPT", algorithm->sval[0]) == 0) {
+                        orientation_config.algorithmType = IMPROVED_OPT_DFS;
+                } else if (strcmp("NAIVEOPT",algorithm->sval[0]) == 0) {
+                        orientation_config.algorithmType = NAIVEOPT;
                 } else {
                         fprintf(stderr, "Invalid algorithm: \"%s\"\n", algorithm->sval[0]);
                         exit(0);
