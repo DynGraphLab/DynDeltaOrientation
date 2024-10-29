@@ -51,26 +51,17 @@ SET(DELTA-ORIENTATIONS_CXX_FILES
         lib/tools/timer.cpp
         lib/tools/random_functions.cpp
         lib/algorithms/dyn_edge_orientation_ILP.cpp
-        lib/algorithms/dyn_edge_orientation_Path.cpp
         lib/algorithms/dyn_edge_orientation_BFSCS.cpp
-        lib/algorithms/dyn_edge_orientation_BFSMax.cpp
         lib/algorithms/dyn_edge_orientation_naive_opt.cpp
         lib/algorithms/dyn_edge_orientation_strong_opt.cpp
 	lib/algorithms/dyn_edge_orientation_strong_opt_dfs.cpp
 	lib/algorithms/dyn_edge_orientation_improved_opt.cpp	lib/algorithms/dyn_edge_orientation_improved_opt_dfs.cpp
         lib/algorithms/dyn_edge_orientation_impro_opt.cpp
-        lib/algorithms/dyn_edge_orientation_BrodalFagerberg.cpp
         lib/algorithms/dyn_edge_orientation_BrodalFagerbergCS.cpp
-        lib/algorithms/dyn_edge_orientation_DFS.cpp
-        lib/algorithms/dyn_edge_orientation_KFlips.cpp
         lib/algorithms/dyn_edge_orientation_Naive.cpp
         lib/algorithms/dyn_edge_orientation_KFlipsCS.cpp
-        lib/algorithms/dyn_edge_orientation_RWalk.cpp
         lib/algorithms/dyn_edge_orientation_RWalkCS.cpp
-        lib/algorithms/dyn_edge_orientation_RWalkMax.cpp
         lib/algorithms/dyn_edge_orientation_MaxDecending.cpp
-        lib/algorithms/dyn_edge_orientation_Hashing.cpp
-        lib/algorithms/dyn_edge_orientation_HashingGoogle.cpp
         lib/algorithms/ilp.cpp
         extern/argtable3-3.0.3/argtable3.c
         )

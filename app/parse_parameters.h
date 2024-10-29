@@ -126,7 +126,7 @@ int parse_parameters(int argn, char **argv,
                 } else if (strcmp("NAIVE", algorithm->sval[0]) == 0) {
                         orientation_config.algorithmType = NAIVE;
                 } else if (strcmp("KFLIPS", algorithm->sval[0]) == 0) {
-                        orientation_config.algorithmType = KFLIPS;
+                        orientation_config.algorithmType = KFLIPSCS;
                 } else if (strcmp("RWALKCS", algorithm->sval[0]) == 0) {
                         orientation_config.algorithmType = RWALKCS;
                 } else if (strcmp("MAXDECENDING", algorithm->sval[0]) == 0) {

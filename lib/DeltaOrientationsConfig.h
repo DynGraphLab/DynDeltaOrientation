@@ -43,7 +43,7 @@ class DeltaOrientationsConfig {
     double bfgrowthfactor = 2;
 
     DeltaOrientationsApplicationStyle applicationStyle = ONCE;
-    DeltaOrientationsAlgorithmType algorithmType       = KFLIPS;
+    DeltaOrientationsAlgorithmType algorithmType       = KFLIPSCS;
 
     int seed = 0;
 
