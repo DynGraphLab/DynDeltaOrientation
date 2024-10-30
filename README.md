@@ -93,10 +93,11 @@ For more options and algorithms run
 $ ./deploy/delta-orientations  --help
 ```
 
-
-## Paper
-
-When using this software in academic context, please cite the following paper (for exact dynamic case):
+Licence
+=====
+The program is licenced under MIT licence.
+If you publish results using our algorithms, please acknowledge our work by quoting the following two papers.
+If you used the exact algorithms:
 
 ```
 @article{grossmann2024engineering,
@@ -107,7 +108,7 @@ When using this software in academic context, please cite the following paper (f
 }
 ```
 
-When using the nearly exact solvers, please cite:
+When using the heuristic solvers, please cite:
 ```
 @article{DBLP:journals/corr/abs-2301-06968,
   author    = {Jannick Borowitz and
