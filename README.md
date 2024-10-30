@@ -118,21 +118,26 @@ If you used the exact algorithms:
 ```
 
 When using the heuristic solvers, please cite:
+
 ```
-@article{DBLP:journals/corr/abs-2301-06968,
-  author    = {Jannick Borowitz and
-               Ernestine Gro{\ss}mann and
-               Christian Schulz},
-  title     = {Engineering Fully Dynamic {\(\Delta\)}-Orientation Algorithms},
-  journal   = {CoRR},
-  volume    = {abs/2301.06968},
-  year      = {2023},
-  url       = {https://doi.org/10.48550/arXiv.2301.06968},
-  doi       = {10.48550/arXiv.2301.06968},
-  eprinttype = {arXiv},
-  eprint    = {2301.06968},
-  timestamp = {Fri, 20 Jan 2023 11:43:30 +0100},
-  biburl    = {https://dblp.org/rec/journals/corr/abs-2301-06968.bib},
-  bibsource = {dblp computer science bibliography, https://dblp.org}
+@inproceedings{DBLP:conf/acda/BorowitzG023,
+  author       = {Jannick Borowitz and
+                  Ernestine Gro{\ss}mann and
+                  Christian Schulz},
+  editor       = {Jonathan W. Berry and
+                  David B. Shmoys and
+                  Lenore Cowen and
+                  Uwe Naumann},
+  title        = {Engineering Fully Dynamic {\(\Delta\)}-Orientation Algorithms},
+  booktitle    = {{SIAM} Conference on Applied and Computational Discrete Algorithms,
+                  {ACDA} 2023, Seattle, WA, USA, May 31 - June 2, 2023},
+  pages        = {25--37},
+  publisher    = {{SIAM}},
+  year         = {2023},
+  url          = {https://doi.org/10.1137/1.9781611977714.3},
+  doi          = {10.1137/1.9781611977714.3},
+  timestamp    = {Tue, 17 Oct 2023 16:38:11 +0200},
+  biburl       = {https://dblp.org/rec/conf/acda/BorowitzG023.bib},
+  bibsource    = {dblp computer science bibliography, https://dblp.org}
 }
 ```
