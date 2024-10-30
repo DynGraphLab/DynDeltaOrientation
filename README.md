@@ -5,6 +5,8 @@ This is repository implements and benchmarks state-of-the-art and new approaches
 
 The repository contains two types of algorithms -- exact algorithms and heuristics. The best heuristic algorithm considered in this paper in terms of quality, based on a simple breadth-first search, computes the optimum result on more than 90% of the instances and is on average only 2.4% worse than the optimum solution. Our exact algorithm maintains an optimal edge orientation during both insertions and deletions. The update time of our algorithm is up to 6 orders of magnitude faster than static exact algorithms.  This repository is joint work of Jannick Borowitz, Ernestine Großmann, Henrik Reinstädtler, Christian Schulz and Fabian Walliser. 
 
+For optimal static algorithms for the problem, have a look at <a href="https://github.com/HeiOrient/HeiOrient">HeiOrient</a>.
+
 Performance of Heuristic Algorithms
 =====
 
@@ -118,21 +120,16 @@ If you used the exact algorithms:
 ```
 
 When using the heuristic solvers, please cite:
+
 ```
-@article{DBLP:journals/corr/abs-2301-06968,
-  author    = {Jannick Borowitz and
-               Ernestine Gro{\ss}mann and
-               Christian Schulz},
-  title     = {Engineering Fully Dynamic {\(\Delta\)}-Orientation Algorithms},
-  journal   = {CoRR},
-  volume    = {abs/2301.06968},
-  year      = {2023},
-  url       = {https://doi.org/10.48550/arXiv.2301.06968},
-  doi       = {10.48550/arXiv.2301.06968},
-  eprinttype = {arXiv},
-  eprint    = {2301.06968},
-  timestamp = {Fri, 20 Jan 2023 11:43:30 +0100},
-  biburl    = {https://dblp.org/rec/journals/corr/abs-2301-06968.bib},
-  bibsource = {dblp computer science bibliography, https://dblp.org}
+@inproceedings{DBLP:conf/acda/BorowitzG023,
+  author       = {Jannick Borowitz and
+                  Ernestine Gro{\ss}mann and
+                  Christian Schulz},
+  title        = {Engineering Fully Dynamic {\(\Delta\)}-Orientation Algorithms},
+  booktitle    = {{ACDA}},
+  pages        = {25--37},
+  publisher    = {{SIAM}},
+  year         = {2023}
 }
 ```
