@@ -20,7 +20,7 @@ Performance of Exact Algorithms
 <p align="center">
 <img src="./pics/performanceOPT.png"
   alt="performance"
-  width="701" height="558">
+  width="701" height="275">
 </p>
 
 
