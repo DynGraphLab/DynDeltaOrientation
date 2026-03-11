@@ -1,135 +1,135 @@
-# Engineering Fully Dynamic Heuristic and Exact $\Delta $-Orientation Algorithms
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Codacy Badge](https://app.codacy.com/project/badge/Grade/6a878c2175f74b2c923fe128f59d800a)](https://app.codacy.com/gh/DynGraphLab/DynDeltaOrientation/dashboard?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+# DynDeltaOrientation &mdash; Fully Dynamic Edge Orientation
 
-This is repository implements and benchmarks state-of-the-art and new approaches to the problems of finding optimal as well as good delta-orientations for sparse graphs. A (fully) dynamic graph algorithm is a data structure that supports edge insertions, edge deletions, and answers specific queries pertinent to the problem at hand. In this work, we address the fully dynamic edge orientation problem, also known as the fully dynamic $\Delta$-orientation problem. The objective is to maintain an orientation of the edges in an undirected graph such that the out-degree of any vertex remains low. When edges are inserted or deleted, it may be necessary to reorient some edges to prevent vertices from having excessively high out-degrees.  While there has been theoretical work on dynamic versions of this problem, currently has been little effort in experimentation. We close this gap and engineer a range of new dynamic edge orientation algorithms as well as algorithms from the current literature and make them available here. 
-
-The repository contains two types of algorithms -- exact algorithms and heuristics. The best heuristic algorithm considered in this paper in terms of quality, based on a simple breadth-first search, computes the optimum result on more than 90% of the instances and is on average only 2.4% worse than the optimum solution. Our exact algorithm maintains an optimal edge orientation during both insertions and deletions. The update time of our algorithm is up to 6 orders of magnitude faster than static exact algorithms.  This repository is joint work of Jannick Borowitz, Ernestine Großmann, Henrik Reinstädtler, Christian Schulz and Fabian Walliser. 
-
-For optimal static algorithms for the problem, have a look at <a href="https://github.com/HeiOrient/HeiOrient">HeiOrient</a>.
-
-Performance of Heuristic Algorithms
-=====
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![C++17](https://img.shields.io/badge/C++-17-blue.svg)](https://en.cppreference.com/w/cpp/17)
+[![CMake](https://img.shields.io/badge/build-CMake-blue)](https://cmake.org/)
+[![Linux](https://img.shields.io/badge/platform-Linux-blue)](https://github.com/DynGraphLab/DynDeltaOrientation)
+[![macOS](https://img.shields.io/badge/platform-macOS-blue)](https://github.com/DynGraphLab/DynDeltaOrientation)
+[![Homebrew](https://img.shields.io/badge/homebrew-available-orange)](https://github.com/DynGraphLab/homebrew-dyngraphlab)
+[![GitHub Stars](https://img.shields.io/github/stars/DynGraphLab/DynDeltaOrientation)](https://github.com/DynGraphLab/DynDeltaOrientation/stargazers)
+[![GitHub Issues](https://img.shields.io/github/issues/DynGraphLab/DynDeltaOrientation)](https://github.com/DynGraphLab/DynDeltaOrientation/issues)
+[![GitHub Last Commit](https://img.shields.io/github/last-commit/DynGraphLab/DynDeltaOrientation)](https://github.com/DynGraphLab/DynDeltaOrientation/commits)
+[![arXiv](https://img.shields.io/badge/arXiv-2301.06968-b31b1b)](https://arxiv.org/abs/2301.06968)
+[![arXiv](https://img.shields.io/badge/arXiv-2407.12595-b31b1b)](https://arxiv.org/abs/2407.12595)
+[![Heidelberg University](https://img.shields.io/badge/Heidelberg-University-c1002a)](https://www.uni-heidelberg.de)
 
 <p align="center">
-<img src="./pics/performance.png"
-  alt="performance"
-  width="701" height="558">
+  <img src="./img/dyndeltaorientation-banner.png" alt="DynDeltaOrientation Banner" width="600"/>
 </p>
 
+Part of the [DynGraphLab &mdash; Dynamic Graph Algorithms](https://github.com/DynGraphLab) open source framework. Developed at the [Algorithm Engineering Group, Heidelberg University](https://ae.ifi.uni-heidelberg.de).
 
-Performance of Exact Algorithms
-======
+## Description
+
+This repository implements and benchmarks state-of-the-art and new approaches for finding optimal as well as good delta-orientations in sparse graphs. The objective is to maintain an orientation of the edges in an undirected graph such that the maximum out-degree of any vertex remains low. When edges are inserted or deleted, it may be necessary to reorient some edges to prevent vertices from having excessively high out-degrees.
+
+The repository contains two types of algorithms &mdash; **exact algorithms** and **heuristics**:
+- The best heuristic algorithm, based on breadth-first search, computes the optimum result on **more than 90%** of instances and is on average only **2.4%** worse than the optimum solution.
+- The exact algorithm maintains an optimal edge orientation during both insertions and deletions, with update times up to **6 orders of magnitude faster** than static exact algorithms.
+
 <p align="center">
-<img src="./pics/performanceOPT.png"
-  alt="performance"
-  width="701" height="275">
+<img src="./pics/performance.png" alt="Heuristic Performance" width="500">
 </p>
 
+For optimal *static* algorithms, see [HeiOrient](https://github.com/HeiOrient/HeiOrient).
 
+## Install via Homebrew
 
-## Compilation
-
-Before you can start you need to install the following software packages:
-
-- if you want to use ILPs, then you need to install Gurobi first 
-
-Once you installed the packages, just type 
 ```console
-./compile_withcmake.sh -DILP=On
+brew install DynGraphLab/dyngraphlab/dyndeltaorientation
 ```
-In this case, all binaries, libraries and headers are in the folder ./deploy/ 
 
-Note that this script detects the amount of available cores on your machine and uses all of them for the compilation process. If you don't want that, set the variable NCORES to the number of cores that you would like to use for compilation. 
-
-Alternatively use the standard cmake build process:
-```console 
-mkdir build
-cd build 
-cmake ../ -DCMAKE_BUILD_TYPE=Release -DILP=On
-make 
-cd ..
+Then run:
+```console
+dyndeltaorientation FILE --algorithm=IMPROVEDOPT
 ```
-In this case, the binaries, libraries and headers are in the folder ./build as well as ./build/
-If you don't want to use ILPs, you can run
 
-```console 
+## Installation (from source)
+
+```console
+git clone https://github.com/DynGraphLab/DynDeltaOrientation
+cd DynDeltaOrientation
 ./compile_withcmake.sh -DILP=Off
 ```
 
-In this case, all components of the programs using ILPs will be disabled and Gurobi is not required.
-
-## Example run
-
-First unpack the example network: 
+All binaries are placed in `./deploy/`. To enable ILP-based algorithms (requires [Gurobi](https://www.gurobi.com/)):
 
 ```console
-cd examples
-tar xfz *.tar.gz
+./compile_withcmake.sh -DILP=On
 ```
-Then run
+
+Alternatively, use the standard CMake process:
 
 ```console
-$./deploy/delta-orientations examples/youtube-u-growth.seq --algorithm=IMPROVEDOPT 
-io took 2.30678
-time             8.9803
-maxOutDegree     78
+mkdir build && cd build
+cmake ../ -DCMAKE_BUILD_TYPE=Release -DILP=Off
+make && cd ..
 ```
+
+## Usage
 
 ```console
-$ ./deploy/delta-orientations examples/youtube-u-growth.seq --algorithm=NAIVE
-io took 4.60033
-time 		 0.922766
-maxOutDegree 	 118
+dyndeltaorientation FILE [options]
 ```
+
+### Examples
 
 ```console
-$ ./deploy/delta-orientations examples/youtube-u-growth.seq --algorithm=MAXDECENDING --depth=10
-io took 4.48079
-time 		 4.0129
-internal max deg 78
-maxOutDegree 	 78
+./deploy/delta-orientations examples/youtube-u-growth.seq --algorithm=IMPROVEDOPT
+./deploy/delta-orientations examples/youtube-u-growth.seq --algorithm=NAIVE
+./deploy/delta-orientations examples/youtube-u-growth.seq --algorithm=MAXDECENDING --depth=10
+./deploy/delta-orientations examples/youtube-u-growth.seq --algorithm=KFLIPS --flips=10
 ```
+
+For all available algorithms and options:
 
 ```console
-$ ./deploy/delta-orientations examples/youtube-u-growth.seq --algorithm=KFLIPS --flips=10
-io took 4.41465
-time 		 9.14307
-internal max deg 82
-maxOutDegree 	 82
+./deploy/delta-orientations --help
 ```
 
-For more options and algorithms run
+## Input Format
 
-```console
-$ ./deploy/delta-orientations  --help
-```
-
-Licence
-=====
-The program is licenced under MIT licence.
-If you publish results using our algorithms, please acknowledge our work by quoting the following two papers.
-If you used the exact algorithms:
+Dynamic graph sequence format. The first line starts with `#` followed by the number of nodes and updates. Each subsequent line specifies an operation: `1 u v` for edge insertion, `0 u v` for edge deletion.
 
 ```
-@article{grossmann2024engineering,
-  title={Engineering Fully Dynamic Exact $$\backslash$Delta $-Orientation Algorithms},
-  author={Gro{\ss}mann, Ernestine and Reinst{\"a}dtler, Henrik and Schulz, Christian and Walliser, Fabian},
-  journal={arXiv preprint arXiv:2407.12595},
-  year={2024}
-}
+# 30399 87627
+1 1 2
+1 51 52
+0 1 2
 ```
 
-When using the heuristic solvers, please cite:
+## License
 
-```
+The program is licensed under the [MIT License](https://opensource.org/licenses/MIT).
+If you publish results using our algorithms, please acknowledge our work by citing the following papers.
+
+When using the **heuristic** algorithms:
+
+```bibtex
 @inproceedings{DBLP:conf/acda/BorowitzG023,
   author       = {Jannick Borowitz and
                   Ernestine Gro{\ss}mann and
                   Christian Schulz},
   title        = {Engineering Fully Dynamic {\(\Delta\)}-Orientation Algorithms},
-  booktitle    = {{ACDA}},
+  booktitle    = {{SIAM} Conference on Applied and Computational Discrete Algorithms,
+                  {ACDA} 2023},
   pages        = {25--37},
   publisher    = {{SIAM}},
-  year         = {2023}
+  year         = {2023},
+  doi          = {10.1137/1.9781611977714.3}
+}
+```
+
+When using the **exact** algorithms:
+
+```bibtex
+@article{grossmann2024engineering,
+  author       = {Ernestine Gro{\ss}mann and
+                  Henrik Reinst{\"a}dtler and
+                  Christian Schulz and
+                  Fabian Walliser},
+  title        = {Engineering Fully Dynamic Exact $\Delta$-Orientation Algorithms},
+  journal      = {arXiv preprint arXiv:2407.12595},
+  year         = {2024}
 }
 ```
