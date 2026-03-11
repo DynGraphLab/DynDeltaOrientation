@@ -123,13 +123,17 @@ When using the **heuristic** algorithms:
 When using the **exact** algorithms:
 
 ```bibtex
-@article{grossmann2024engineering,
+@inproceedings{DBLP:conf/alenex/GrossmannR0W25,
   author       = {Ernestine Gro{\ss}mann and
-                  Henrik Reinst{\"a}dtler and
+                  Henrik Reinst{\"{a}}dtler and
                   Christian Schulz and
                   Fabian Walliser},
-  title        = {Engineering Fully Dynamic Exact $\Delta$-Orientation Algorithms},
-  journal      = {arXiv preprint arXiv:2407.12595},
-  year         = {2024}
+  title        = {Engineering Fully Dynamic Exact {\(\Delta\)}-Orientation Algorithms},
+  booktitle    = {27th Symposium on Algorithm Engineering and Experiments,
+                  {ALENEX} 2025},
+  pages        = {15--28},
+  publisher    = {{SIAM}},
+  year         = {2025},
+  doi          = {10.1137/1.9781611978339.2}
 }
 ```
