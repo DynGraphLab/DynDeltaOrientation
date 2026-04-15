@@ -19,6 +19,8 @@
 
 Part of the [DynGraphLab &mdash; Dynamic Graph Algorithms](https://github.com/DynGraphLab) open source framework. Developed at the [Algorithm Engineering Group, Heidelberg University](https://ae.ifi.uni-heidelberg.de).
 
+> **Python Interface:** An easy-to-use Python interface for this software is available in [CHSZLabLib](https://github.com/CHSZLab/CHSZLabLib).
+
 ## Description
 
 This repository implements and benchmarks state-of-the-art and new approaches for finding optimal as well as good delta-orientations in sparse graphs. The objective is to maintain an orientation of the edges in an undirected graph such that the maximum out-degree of any vertex remains low. When edges are inserted or deleted, it may be necessary to reorient some edges to prevent vertices from having excessively high out-degrees.
